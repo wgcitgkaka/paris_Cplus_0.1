@@ -2,6 +2,7 @@
 #collect_data.sh
 #author: wgc
 
+cd "$(dirname "$0")"
 dirName=`date +%y%m%d`
 dir=$(find . -name "$dirName")
 echo $dirName

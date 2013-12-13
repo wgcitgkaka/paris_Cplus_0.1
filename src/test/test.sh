@@ -15,6 +15,7 @@ then
 else
 	echo "false"
 fi
+echo "kaka > /dev/null"
 #cat record.txt | while read line
 #do
 #	echo $line

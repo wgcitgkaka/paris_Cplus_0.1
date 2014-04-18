@@ -49,6 +49,10 @@ struct Options {
   int						detection_type;
   int							factor;
   int 						return_flow_id;
+
+  /* json output */
+  bool display_json;
+  
 	Options (int argc, char** argv);
 	~Options ();
 	void dump ();

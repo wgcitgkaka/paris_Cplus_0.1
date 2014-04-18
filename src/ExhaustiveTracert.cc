@@ -242,11 +242,13 @@ ExhaustiveTracert::trace (char* target, int id, int id_max) {
 	// with its own value 
 	id++;
 
+	if (opts->debug)
 	printf("starting algo with range %d - %d\n", id, id_max);
 	
 	this->target = Util::my_inet_aton(target);
 	
 	this->target_prefix = this->target & 0xffffff;
+	if (opts->debug)
 	printf("%s\n", Util::my_inet_ntoa(this->target_prefix));
 	
   this->id_current = id;

@@ -45,6 +45,7 @@ Options::Options (int argc, char** argv) {
   probe_length         = 0;
   display_ipid         = false;
   display_ttl          = false;
+  display_json		   = false;
   proc_id              = src_port;
   debug                = false;
   bandwidth = 0;
@@ -75,11 +76,12 @@ Options::Options (int argc, char** argv) {
     {"missing_hop", 1, NULL, 'M'},
     {"algo",        1, NULL, 'a'},
     {"length",      1, NULL, 'L'},
+    {"json", 	    0, NULL, 'j'},
     {NULL,          0, NULL,  0 }
   };
 #endif
 
-  char* short_opts = "AZhVvQniDf:F:m:p:o:s:d:t:w:T:q:M:a:lb:L:B:c:E:r:";
+  char* short_opts = "AZhVvQniDf:F:m:p:o:s:d:t:w:T:q:M:a:lb:L:B:c:E:r:j";
 
   int opt = 1;
 #ifndef __FreeBSD__  
@@ -98,6 +100,9 @@ Options::Options (int argc, char** argv) {
         log(DUMP, "Option : help");
         help();
         break;
+	  case 'j':	  //json
+	  	display_json = true;
+		break;
       case 'V':   // version
         log(DUMP, "Option : version");
         version();
@@ -290,6 +295,7 @@ Options::help () {
   printf("  -c                       number of threads (default 1)\n");
   printf("  -E                       probe multiplier\n");
   printf("  -r                       set the return flow identifier\n");
+  printf("  -j						 json output\n");
   printf("\n");
   exit(0);
 }

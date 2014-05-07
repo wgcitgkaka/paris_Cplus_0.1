@@ -48,7 +48,7 @@ HopByHopTracert::trace (char* target, int id, int id_max) {
 
 	id++;
 	
-	if (opts->debug)
+	if (opts->debug && !opts->display_json)
 		fprintf(stderr, "starting algo with range %d - %d\n", id, id_max);
 	
   this->target = Util::my_inet_aton(target);

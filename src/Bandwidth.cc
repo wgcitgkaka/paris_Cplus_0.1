@@ -84,8 +84,8 @@ Bandwidth::runThread() {
 		pthread_mutex_lock(&lock);
 		
 		if (++display_counter >= 60) {
-			fprintf(stdout, "# Bandwidth, sent = %d pkt/s, recv = %d pkt/s\n", 
-					display_sent/display_counter, display_recv/display_counter);
+			//fprintf(stdout, "# Bandwidth, sent = %d pkt/s, recv = %d pkt/s\n", 
+					//display_sent/display_counter, display_recv/display_counter);
 			display_counter = 0;
 			display_sent = 0;
 			display_recv = 0;

@@ -103,7 +103,7 @@ ExhaustiveTracert::send_probes_and_wait(MapProbes* mprobes, int count, int const
 	if (constant)
 		count += mprobes->nbr_probes;
 	
-	if (opts->debug)
+	if (opts->debug && !opts->display_json)
 		fprintf(stderr, "%d.[%d] already sent %d, total %d\n", id_initial, ttl_current, mprobes->nbr_probes, count);
 	
 	for (int i = mprobes->nbr_probes; i < count; i++) {
@@ -242,13 +242,13 @@ ExhaustiveTracert::trace (char* target, int id, int id_max) {
 	// with its own value 
 	id++;
 
-	if (opts->debug)
+	if (opts->debug && !opts->display_json)
 	printf("starting algo with range %d - %d\n", id, id_max);
 	
 	this->target = Util::my_inet_aton(target);
 	
 	this->target_prefix = this->target & 0xffffff;
-	if (opts->debug)
+	if (opts->debug && !opts->display_json)
 	printf("%s\n", Util::my_inet_ntoa(this->target_prefix));
 	
   this->id_current = id;

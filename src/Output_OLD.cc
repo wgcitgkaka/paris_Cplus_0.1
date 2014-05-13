@@ -92,23 +92,28 @@ Output::text (FILE* out, Tracert *results, Options* opts) {
         && last_tprobe != NULL){
         if (MPLSHeader::compareStacks(tprobe->mpls_stack, tprobe->nbrLabels,
             last_tprobe->mpls_stack, last_tprobe->nbrLabels) != 0) {
-            fprintf(stdout, ", ");
+            fprintf(stderr, ", ");
             show_stack = true;
         }
       }
       else if (tprobe != NULL && tprobe->mpls_stack != NULL) {
-        fprintf(stdout, "   MPLS Label ");
+	  	if(!opts->display_json)
+        	fprintf(stderr, "   MPLS Label ");
         show_stack = true;
         last_tprobe = tprobe;
       }
 
       if (show_stack) {
-        fprintf(stdout, "%d TTL=%d", tprobe->mpls_stack[0], tprobe->mpls_ttl);
+	  	if(!opts->display_json)
+	  	{
+        	fprintf(stderr, "%d TTL=%d", tprobe->mpls_stack[0], tprobe->mpls_ttl);
 
-        for (int j = 1; j < tprobe->nbrLabels; j++)
-            fprintf(stdout, " | %d", tprobe->mpls_stack[j]);
+        	for (int j = 1; j < tprobe->nbrLabels; j++)
+            	fprintf(stderr, " | %d", tprobe->mpls_stack[j]);
+	  	
 
-        new_line = true;
+        	new_line = true;
+	  	}
       }
       last_tprobe = tprobe;
     }

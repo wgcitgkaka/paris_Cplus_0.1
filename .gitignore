@@ -1,0 +1,15 @@
+Makefile.in
+aclocal.m4
+compile
+config.guess
+config.log
+config.status
+config.sub
+configure
+install-sh
+depcomp
+ltmain.sh
+libtool
+src/paris-traceroute
+
+*.o

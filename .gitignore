@@ -13,5 +13,5 @@ libtool
 src/paris-traceroute
 src/.deps/
 src/.libs/
-
+src/*.txt
 *.o

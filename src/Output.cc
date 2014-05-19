@@ -492,8 +492,11 @@ else
     
     const TimedProbe* last_tprobe = NULL;
     bool first_interf = true;
-    
+
+	int save_j = 0; 
     for (int j = 0; j < results->getNbrProbes(i); j++) {
+
+
 
       const TimedProbe* tprobe = results->getHopInfo(i, j);
       //bool different_address = false;
@@ -522,11 +525,11 @@ else
             || (tprobe->host_address_raw != last_tprobe->host_address_raw)) {
 
             //fprintf(out, " %s", tprobe->getHostName());
-			printf(",\"hostname\":\"%s\"",tprobe->getHostName());
+			printf(",\"hostname%d\":\"%s\"",save_j,tprobe->getHostName());
 
             if (opts->resolve_hostname)
               //fprintf(out, " (%s)", tprobe->getHostAddress());
-              printf(",\"resolve\":\"%s\"",tprobe->getHostAddress());
+              printf(",\"resolve%d\":\"%s\"",save_j,tprobe->getHostAddress());
           }
           
           show_interface = true;
@@ -569,12 +572,12 @@ else
         			fprintf(out, " ");
         	first_interf = false;
           //fprintf(out, " %s", tprobe->getHostName());
-		  printf(",\"hostname%d\":\"%s\"",j,tprobe->getHostName());
+		  printf(",\"hostname%d\":\"%s\"",save_j,tprobe->getHostName());
 
 					//fprintf(out, " XXX %d XXX\n", opts->resolve_hostname);
           if (opts->resolve_hostname)
             //fprintf(out, " (%s)", tprobe->getHostAddress());
-		  	printf(",\"resolve%d\":\"%s\"",j, tprobe->getHostAddress());
+		  	printf(",\"resolve%d\":\"%s\"",save_j, tprobe->getHostAddress());
 
           // For per-flow load balancing, print all the xtuple identifiers
           // that reach this interface
@@ -584,7 +587,7 @@ else
             // if new algo, or old algo and per-flow lb
             if (!exh_old || results->getLoadBalancingType(i, j) == 1) {
 	            //fprintf(out, ":%d", tprobe->flow_identifier);
-				printf(",\"flow%d\":\"%d",j, tprobe->flow_identifier);
+				printf(",\"flow%d\":\"%d",save_j, tprobe->flow_identifier);
 	
 	            // Find all the probes that returned the same interface
 	            for (int k = j + 1; k < results->getNbrProbes(i); k++) {
@@ -606,11 +609,11 @@ else
 						switch (type) {
 							case 1:
 								//fprintf(out, " =");
-								printf(",\"load_balancing\":\"PFLB\"");
+								printf(",\"load_balancing%d\":\"PFLB\"",save_j);
 								break;
 							case 2:
 								//fprintf(out, " <");
-								printf(",\"load_balaning\":\"PPLB\"");
+								printf(",\"load_balaning%d\":\"PPLB\"",save_j);
 								break;	 
 						}
           }
@@ -667,10 +670,10 @@ else
 	        acc /= count;
 	        float stdev = sqrt(acc);	        
 	        //fprintf(out, "  %04.03f/%04.03f/%04.03f/%04.03f ms ", min, avg, max, stdev);
-			printf(",\"min_rtt%d\":%04.03f",j,min);
-			printf(",\"avg_rtt%d\":%04.03f",j,avg);
-			printf(",\"max_rtt%d\":%04.03f",j,max);
-			printf(",\"stdev_rtt%d\":%04.03f",j,stdev);
+			printf(",\"min_rtt%d\":%04.03f",save_j,min);
+			printf(",\"avg_rtt%d\":%04.03f",save_j,avg);
+			printf(",\"max_rtt%d\":%04.03f",save_j,max);
+			printf(",\"stdev_rtt%d\":%04.03f",save_j,stdev);
 	        
         }
 		else 
@@ -704,7 +707,7 @@ else
             //fprintf(out, "!%d ", tprobe->reply_type);
             // FIX
             //fprintf(out, "!? ");
-			printf(",\"reply_type%d\":\"!?\",j");
+			printf(",\"reply_type%d\":\"!?\"",j);
             break;
         }
 
@@ -752,10 +755,13 @@ else
           
         if (opts->mline_output)
         	fprintf(out, "\n");
+
+	    save_j++;
       }
       
       // Update only if tprobe is valid
       last_tprobe = tprobe;
+	
       
 #ifdef BRICEBRICE
       // We received a valid reply
@@ -855,6 +861,7 @@ else
       // Update only if tprobe is valid
 //       if (tprobe->arrival_time !=0)
 //         last_tprobe = tprobe;
+	   
     }
     
     if (! opts->mline_output)
